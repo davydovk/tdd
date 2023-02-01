@@ -83,6 +83,7 @@ class NewVisitorTest(LiveServerTestCase):
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         """ Тест: многочисленные пользователи могут начать список по разным url """
+
         # Эдит начинает новый список
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element(By.ID, 'id_new_item')
@@ -98,7 +99,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Мы используем новый сеанс браузера, тем самым обеспечивая, чтобы никакая информация
         # от Эдит не прошла через данные cookie и пр.
         self.browser.quit()
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Firefox(executable_path=r'../../venv/Scripts/geckodriver.exe')
 
         # Фрэнсис посещает домашнюю страницу. Нет никаких признаков Эдит
         self.browser.get(self.live_server_url)
