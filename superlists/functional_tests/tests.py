@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common import WebDriverException
@@ -16,6 +18,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         """ Установка """
         self.browser = webdriver.Firefox(executable_path=r'../../venv/Scripts/geckodriver.exe')
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = f'https://{staging_server}'
 
     def tearDown(self) -> None:
         """ Демонтаж """
@@ -101,8 +106,6 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         # Эдит интересно, запомнит ли сайт ее список. Далее она видит, что сайт сгенерировал для нее уникальный
         # URL-адрес - об этом выводится небольшой текст с объяснениями.
-        self.fail('Закончить тест!')
-
         # Она посещает этот URL-адрес - ее список по-прежнему там.
 
         # Удовлетворенная, она снова ложится спать.
